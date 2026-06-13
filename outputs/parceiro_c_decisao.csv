@@ -1,0 +1,2 @@
+﻿parceiro,grupo_controle,grupo_recomendado,decisao,escalar_automaticamente,confianca,motivo
+Parceiro C,Grupo 1,Grupo 1,ESCALAR,True,ALTA,"Nenhuma variante apresentou aumento estatisticamente significativo de receita líquida em relação ao controle. Portanto, a recomendação é manter e escalar Grupo 1. Resultados observados: Grupo 2: receita líquida -100.00%, vendas -3.06% e compradores -0.59%."

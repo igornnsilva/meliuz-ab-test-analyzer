@@ -1,0 +1,2 @@
+﻿parceiro,grupo_controle,grupo_recomendado,decisao,escalar_automaticamente,confianca,motivo
+Parceiro A,Grupo 1,Grupo 1,REVISÃO NECESSÁRIA,False,BAIXA,"A decisão automática foi bloqueada porque a taxa de cashback mudou durante o teste nos grupos: Grupo 1, Grupo 2, Grupo 3. Se fosse obrigatório escolher apenas pelos resultados agregados, o grupo provisório seria Grupo 1, por apresentar a maior receita líquida total."

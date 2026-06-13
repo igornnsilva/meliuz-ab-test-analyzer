@@ -1,0 +1,383 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+    <title>Relatório A/B — Parceiro B</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: #f4f6f8;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #202124;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 20px 60px;
+        }
+
+        .header {
+            background: #ffffff;
+            padding: 28px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .header h1 {
+            margin-top: 0;
+        }
+
+        .section {
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow-x: auto;
+        }
+
+        .decision {
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+        .decision-success {
+            background: #e6f4ea;
+            border-left: 6px solid #188038;
+        }
+
+        .decision-warning {
+            background: #fef7e0;
+            border-left: 6px solid #f9ab00;
+        }
+
+        .decision h2 {
+            margin-top: 0;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid #dadce0;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .data-table th {
+            background: #f1f3f4;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(450px, 1fr));
+            gap: 20px;
+        }
+
+        .chart-card {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .chart-card img {
+            width: 100%;
+            height: auto;
+        }
+
+        .metadata {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .metadata-item strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #5f6368;
+            margin-top: 32px;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+
+        <header class="header">
+            <h1>Relatório de Teste A/B de Cashback</h1>
+
+            <div class="metadata">
+                <div class="metadata-item">
+                    <strong>Parceiro</strong>
+                    Parceiro B
+                </div>
+
+                <div class="metadata-item">
+                    <strong>Período</strong>
+                    01/05/2011 até 30/06/2011
+                </div>
+
+                <div class="metadata-item">
+                    <strong>Status dos dados</strong>
+                    APROVADO
+                </div>
+
+                <div class="metadata-item">
+                    <strong>Grupo de controle</strong>
+                    Grupo 1
+                </div>
+            </div>
+        </header>
+
+        <section class="decision decision-success">
+            <h2>Decisão recomendada</h2>
+
+            <p>
+                <strong>Decisão:</strong>
+                ESCALAR
+            </p>
+
+            <p>
+                <strong>Grupo recomendado:</strong>
+                Grupo 1
+            </p>
+
+            <p>
+                <strong>Confiança:</strong>
+                ALTA
+            </p>
+
+            <p>
+                <strong>Justificativa:</strong><br>
+                Nenhuma variante apresentou aumento estatisticamente significativo de receita líquida em relação ao controle. Portanto, a recomendação é manter e escalar Grupo 1. Resultados observados: Grupo 2: receita líquida -50.04%, vendas -30.06% e compradores -31.76%; Grupo 3: receita líquida -81.65%, vendas -35.76% e compradores -37.06%.
+            </p>
+        </section>
+
+        <section class="section">
+            <h2>Qualidade dos dados</h2>
+
+            <ul>
+                <li>Nenhum problema relevante encontrado.</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>Resultados consolidados</h2>
+
+            <table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variante</th>
+      <th>Dias</th>
+      <th>Compradores</th>
+      <th>Vendas totais</th>
+      <th>Cashback</th>
+      <th>Receita líquida</th>
+      <th>Ticket médio</th>
+      <th>Taxa de cashback</th>
+      <th>Margem líquida</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Grupo 1</td>
+      <td>61</td>
+      <td>7.990</td>
+      <td>R$ 4.093.818,00</td>
+      <td>R$ 163.751,00</td>
+      <td>R$ 286.570,00</td>
+      <td>R$ 512,37</td>
+      <td>4.00%</td>
+      <td>7.00%</td>
+    </tr>
+    <tr>
+      <td>Grupo 2</td>
+      <td>61</td>
+      <td>5.452</td>
+      <td>R$ 2.863.019,00</td>
+      <td>R$ 171.778,00</td>
+      <td>R$ 143.157,00</td>
+      <td>R$ 525,13</td>
+      <td>6.00%</td>
+      <td>5.00%</td>
+    </tr>
+    <tr>
+      <td>Grupo 3</td>
+      <td>61</td>
+      <td>5.029</td>
+      <td>R$ 2.629.963,00</td>
+      <td>R$ 236.697,00</td>
+      <td>R$ 52.593,00</td>
+      <td>R$ 522,96</td>
+      <td>9.00%</td>
+      <td>2.00%</td>
+    </tr>
+  </tbody>
+</table>
+        </section>
+
+        <section class="section">
+            <h2>Comparações estatísticas</h2>
+
+            <p>
+                As variantes foram comparadas com o grupo de
+                controle usando observações pareadas por data.
+            </p>
+
+            <table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variante</th>
+      <th>Métrica</th>
+      <th>Lift</th>
+      <th>P-valor</th>
+      <th>IC 95%</th>
+      <th>Significativo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Grupo 2</td>
+      <td>Compradores</td>
+      <td>-31.76%</td>
+      <td>0.000000</td>
+      <td>[-47.47, -35.75]</td>
+      <td>Sim</td>
+    </tr>
+    <tr>
+      <td>Grupo 2</td>
+      <td>Vendas totais</td>
+      <td>-30.06%</td>
+      <td>0.000000</td>
+      <td>[-24169.85, -16184.22]</td>
+      <td>Sim</td>
+    </tr>
+    <tr>
+      <td>Grupo 2</td>
+      <td>Receita líquida</td>
+      <td>-50.04%</td>
+      <td>0.000000</td>
+      <td>[-2656.58, -2045.48]</td>
+      <td>Sim</td>
+    </tr>
+    <tr>
+      <td>Grupo 2</td>
+      <td>Ticket médio</td>
+      <td>+2.93%</td>
+      <td>0.176157</td>
+      <td>[-6.91, 36.84]</td>
+      <td>Não</td>
+    </tr>
+    <tr>
+      <td>Grupo 3</td>
+      <td>Compradores</td>
+      <td>-37.06%</td>
+      <td>0.000000</td>
+      <td>[-56.05, -41.03]</td>
+      <td>Sim</td>
+    </tr>
+    <tr>
+      <td>Grupo 3</td>
+      <td>Vendas totais</td>
+      <td>-35.76%</td>
+      <td>0.000000</td>
+      <td>[-28519.22, -19476.03]</td>
+      <td>Sim</td>
+    </tr>
+    <tr>
+      <td>Grupo 3</td>
+      <td>Receita líquida</td>
+      <td>-81.65%</td>
+      <td>0.000000</td>
+      <td>[-4255.70, -3415.67]</td>
+      <td>Sim</td>
+    </tr>
+    <tr>
+      <td>Grupo 3</td>
+      <td>Ticket médio</td>
+      <td>+2.59%</td>
+      <td>0.219747</td>
+      <td>[-8.12, 34.61]</td>
+      <td>Não</td>
+    </tr>
+  </tbody>
+</table>
+        </section>
+
+        <section>
+            <h2>Visualizações</h2>
+
+            <div class="charts-grid">
+                
+        <section class="chart-card">
+            <h3>Vendas totais por dia</h3>
+            <img
+                src="charts/vendas_diarias.png"
+                alt="Vendas totais por dia"
+            >
+        </section>
+        
+        <section class="chart-card">
+            <h3>Compradores por dia</h3>
+            <img
+                src="charts/compradores_diarios.png"
+                alt="Compradores por dia"
+            >
+        </section>
+        
+        <section class="chart-card">
+            <h3>Receita líquida por dia</h3>
+            <img
+                src="charts/receita_liquida_diaria.png"
+                alt="Receita líquida por dia"
+            >
+        </section>
+        
+        <section class="chart-card">
+            <h3>Estabilidade da taxa de cashback</h3>
+            <img
+                src="charts/taxa_cashback.png"
+                alt="Estabilidade da taxa de cashback"
+            >
+        </section>
+        
+        <section class="chart-card">
+            <h3>Receita líquida total</h3>
+            <img
+                src="charts/receita_liquida_total.png"
+                alt="Receita líquida total"
+            >
+        </section>
+        
+            </div>
+        </section>
+
+        <footer class="footer">
+            Relatório gerado automaticamente pela solução
+            de análise de testes A/B.
+        </footer>
+
+    </main>
+</body>
+</html>

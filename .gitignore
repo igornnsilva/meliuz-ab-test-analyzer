@@ -1,0 +1,41 @@
+# Ambiente virtual
+.venv/
+venv/
+env/
+
+# Cache do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDEs e editores
+.vscode/
+.idea/
+*.code-workspace
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Arquivos temporários
+*.log
+*.tmp
+*.temp
+~$*
+resultado_pytest.txt
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Variáveis de ambiente e credenciais
+.env
+.env.*
+credentials.json
+service_account.json
+token.json
