@@ -299,13 +299,13 @@ Python 3.12.4
 Clone o repositório:
 
 ```bash
-git clone URL_DO_REPOSITORIO
+git clone https://github.com/igornnsilva/meliuz-ab-test-analyzer.git
 ```
 
 Entre na pasta:
 
 ```bash
-cd meliuz-teste
+cd meliuz-ab-test-analyzer
 ```
 
 Crie o ambiente virtual:
