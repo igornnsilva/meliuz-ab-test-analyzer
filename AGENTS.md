@@ -120,3 +120,10 @@ Ao implementar melhorias:
 5. executar toda a suíte de testes;
 6. não adicionar credenciais ao repositório;
 7. manter relatórios e decisões auditáveis.
+
+## Ambiente Python
+
+No Windows, prefira executar o projeto com:
+
+```powershell
+python main.py --file ".\data\arquivo.csv"
