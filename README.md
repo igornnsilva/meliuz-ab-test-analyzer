@@ -1,3 +1,10 @@
+## Entregáveis
+
+- [Planilha consolidada dos experimentos](outputs/experiment_tracker.csv)
+- [Relatório do Parceiro A](reports/parceiro_a/relatorio.html)
+- [Relatório do Parceiro B](reports/parceiro_b/relatorio.html)
+- [Relatório do Parceiro C](reports/parceiro_c/relatorio.html)
+
 # Analisador de Testes A/B de Cashback
 
 Solução desenvolvida para o teste técnico de **Estágio de Growth AI-Native do Méliuz**.
