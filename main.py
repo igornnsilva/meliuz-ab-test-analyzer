@@ -1,4 +1,3 @@
-
 import argparse
 import unicodedata
 from pathlib import Path
@@ -20,6 +19,7 @@ from src.metrics import (
     add_business_metrics,
     create_group_summary,
 )
+from src.pdf_report_generator import generate_pdf_report
 from src.report_generator import generate_html_report
 from src.statistical_analysis import run_paired_analysis
 from src.tracker import update_experiment_tracker
@@ -225,10 +225,7 @@ def print_business_summary(
     print("=" * 70)
 
     for _, row in summary.iterrows():
-        print(
-            f"\n{row['Grupos de usuários']}"
-        )
-
+        print(f"\n{row['Grupos de usuários']}")
         print("-" * 50)
 
         print(
@@ -499,8 +496,10 @@ def generate_report_files(
     quality: dict,
     decision: dict,
     partner: str,
-) -> Path:
-    """Gera os gráficos e o relatório HTML."""
+) -> tuple[Path, Path]:
+    """
+    Gera os gráficos e os relatórios HTML e PDF.
+    """
     partner_slug = create_partner_slug(partner)
 
     report_directory = (
@@ -513,7 +512,7 @@ def generate_report_files(
         report_directory=report_directory,
     )
 
-    report_path = generate_html_report(
+    html_report_path = generate_html_report(
         analyzed_df=analyzed_df,
         summary=summary,
         comparisons=comparisons,
@@ -523,7 +522,20 @@ def generate_report_files(
         report_directory=report_directory,
     )
 
-    return report_path
+    pdf_report_path = generate_pdf_report(
+        analyzed_df=analyzed_df,
+        summary=summary,
+        comparisons=comparisons,
+        quality=quality,
+        decision=decision,
+        chart_paths=chart_paths,
+        report_directory=report_directory,
+    )
+
+    return (
+        html_report_path,
+        pdf_report_path,
+    )
 
 
 def main() -> None:
@@ -581,7 +593,10 @@ def main() -> None:
             partner=partner,
         )
 
-        report_path = generate_report_files(
+        (
+            html_report_path,
+            pdf_report_path,
+        ) = generate_report_files(
             analyzed_df=analyzed_df,
             summary=summary,
             comparisons=comparisons,
@@ -595,7 +610,8 @@ def main() -> None:
             summary=summary,
             quality=quality,
             decision=decision,
-            report_path=report_path,
+            report_path=html_report_path,
+            pdf_report_path=pdf_report_path,
         )
 
         print("\n" + "=" * 70)
@@ -611,7 +627,12 @@ def main() -> None:
 
         print(
             "\nRelatório HTML gerado:\n"
-            f"  {report_path.resolve()}"
+            f"  {html_report_path.resolve()}"
+        )
+
+        print(
+            "\nRelatório PDF gerado:\n"
+            f"  {pdf_report_path.resolve()}"
         )
 
         print(

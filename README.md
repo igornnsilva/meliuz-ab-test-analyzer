@@ -1,9 +1,23 @@
 ## Entregáveis
 
+### Resumo consolidado
+
 - [Planilha consolidada dos experimentos](outputs/experiment_tracker.csv)
-- [Relatório do Parceiro A](reports/parceiro_a/relatorio.html)
-- [Relatório do Parceiro B](reports/parceiro_b/relatorio.html)
-- [Relatório do Parceiro C](reports/parceiro_c/relatorio.html)
+
+### Parceiro A
+- [Relatório PDF](reports/parceiro_a/relatorio.pdf)
+- [Relatório HTML](reports/parceiro_a/relatorio.html)
+
+
+### Parceiro B
+- [Relatório PDF](reports/parceiro_b/relatorio.pdf)
+- [Relatório HTML](reports/parceiro_b/relatorio.html)
+
+
+### Parceiro C
+- [Relatório PDF](reports/parceiro_c/relatorio.pdf)
+- [Relatório HTML](reports/parceiro_c/relatorio.html)
+
 
 # Analisador de Testes A/B de Cashback
 
