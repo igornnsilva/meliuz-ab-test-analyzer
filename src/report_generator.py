@@ -3,22 +3,10 @@ from pathlib import Path
 
 import pandas as pd
 
-
-def format_currency(value: float) -> str:
-    """
-    Formata valores monetários no padrão brasileiro.
-    """
-    if pd.isna(value):
-        return "N/A"
-
-    formatted = (
-        f"{value:,.2f}"
-        .replace(",", "TEMP")
-        .replace(".", ",")
-        .replace("TEMP", ".")
-    )
-
-    return f"R$ {formatted}"
+from src.formatters import (
+    format_currency_brl,
+    format_integer_brl,
+)
 
 
 def format_percentage(value: float) -> str:
@@ -63,10 +51,8 @@ def prepare_summary_table(
         "Margem líquida",
     ]
 
-    table["Compradores"] = (
-        table["Compradores"]
-        .astype(int)
-        .map(lambda value: f"{value:,}".replace(",", "."))
+    table["Compradores"] = table["Compradores"].map(
+        format_integer_brl
     )
 
     monetary_columns = [
@@ -78,7 +64,7 @@ def prepare_summary_table(
 
     for column in monetary_columns:
         table[column] = table[column].map(
-            format_currency
+            format_currency_brl
         )
 
     percentage_columns = [
@@ -148,13 +134,24 @@ def prepare_statistical_table(
     table["p_valor_t_pareado"] = table[
         "p_valor_t_pareado"
     ].map(
-        lambda value: f"{value:.6f}"
+        lambda value: (
+            "N/A"
+            if pd.isna(value)
+            else f"{value:.6f}"
+        )
     )
 
     table["intervalo_confianca"] = table.apply(
         lambda row: (
-            f"[{row['ic95_inferior']:.2f}, "
-            f"{row['ic95_superior']:.2f}]"
+            "N/A"
+            if (
+                pd.isna(row["ic95_inferior"])
+                or pd.isna(row["ic95_superior"])
+            )
+            else (
+                f"[{row['ic95_inferior']:.2f}, "
+                f"{row['ic95_superior']:.2f}]"
+            )
         ),
         axis=1,
     )
@@ -166,7 +163,7 @@ def prepare_statistical_table(
             True: "Sim",
             False: "Não",
         }
-    )
+    ).fillna("N/A")
 
     table = table[
         [
@@ -242,7 +239,9 @@ def generate_html_report(
             "<li>Nenhum problema relevante encontrado.</li>"
         )
 
-    summary_table = prepare_summary_table(summary)
+    summary_table = prepare_summary_table(
+        summary
+    )
 
     statistical_table = prepare_statistical_table(
         comparisons
@@ -263,12 +262,17 @@ def generate_html_report(
             report_directory
         ).as_posix()
 
+        chart_title = chart_titles.get(
+            chart_name,
+            chart_name.replace("_", " ").title(),
+        )
+
         chart_html += f"""
         <section class="chart-card">
-            <h3>{chart_titles[chart_name]}</h3>
+            <h3>{escape(chart_title)}</h3>
             <img
-                src="{relative_path}"
-                alt="{chart_titles[chart_name]}"
+                src="{escape(relative_path)}"
+                alt="{escape(chart_title)}"
             >
         </section>
         """

@@ -3,6 +3,7 @@ from pathlib import Path
 
 import pandas as pd
 
+from src.formatters import format_currency_brl
 
 TRACKER_COLUMNS = [
     "test_id",
@@ -71,9 +72,10 @@ def build_tracker_row(
     )
 
     result_text = (
-        f"O grupo com maior receita líquida total foi "
-        f"{best_revenue_group}, com R$ {best_revenue:,.2f}. "
-        f"{decision['motivo']}"
+    f"O grupo com maior receita líquida total foi "
+    f"{best_revenue_group}, com "
+    f"{format_currency_brl(best_revenue)}. "
+    f"{decision['motivo']}"
     )
 
     decision_text = (

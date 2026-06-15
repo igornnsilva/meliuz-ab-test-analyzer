@@ -12,7 +12,7 @@ from src.metrics import (
 )
 from src.statistical_analysis import run_paired_analysis
 from src.tracker import update_experiment_tracker
-
+from src.formatters import format_currency_brl
 
 DATASETS = [
     (
@@ -216,3 +216,8 @@ def test_tracker_updates_without_duplicates(
         tracker_df.iloc[0]["parceiro"]
         == "Parceiro B"
     )
+def test_currency_uses_brazilian_format() -> None:
+    """Verifica se valores monetários usam o padrão brasileiro."""
+    assert format_currency_brl(404711) == "R$ 404.711,00"
+    assert format_currency_brl(1234.5) == "R$ 1.234,50"
+    assert format_currency_brl(0) == "R$ 0,00"

@@ -12,6 +12,10 @@ from src.decision_engine import (
     decision_to_dataframe,
     make_decision,
 )
+from src.formatters import (
+    format_currency_brl,
+    format_integer_brl,
+)
 from src.metrics import (
     add_business_metrics,
     create_group_summary,
@@ -22,13 +26,9 @@ from src.tracker import update_experiment_tracker
 
 
 def parse_arguments() -> argparse.Namespace:
-    """
-    Lê os argumentos enviados pelo terminal.
-    """
+    """Lê os argumentos enviados pelo terminal."""
     parser = argparse.ArgumentParser(
-        description=(
-            "Analisador reutilizável de testes A/B de cashback."
-        )
+        description="Analisador reutilizável de testes A/B de cashback."
     )
 
     parser.add_argument(
@@ -75,37 +75,8 @@ def create_partner_slug(partner: str) -> str:
     return slug.strip("_")
 
 
-def format_currency(value: float) -> str:
-    """
-    Formata um número como moeda brasileira.
-    """
-    if pd.isna(value):
-        return "N/A"
-
-    formatted = (
-        f"{value:,.2f}"
-        .replace(",", "TEMP")
-        .replace(".", ",")
-        .replace("TEMP", ".")
-    )
-
-    return f"R$ {formatted}"
-
-
-def format_number(value: float) -> str:
-    """
-    Formata um número inteiro no padrão brasileiro.
-    """
-    if pd.isna(value):
-        return "N/A"
-
-    return f"{int(value):,}".replace(",", ".")
-
-
 def validate_loaded_dataset(df: pd.DataFrame) -> None:
-    """
-    Executa validações adicionais após o carregamento.
-    """
+    """Executa validações adicionais após o carregamento."""
     if df.empty:
         raise ValueError(
             "O dataset está vazio e não pode ser analisado."
@@ -131,9 +102,7 @@ def print_dataset_information(
     df: pd.DataFrame,
     file_path: str,
 ) -> None:
-    """
-    Exibe informações gerais do dataset.
-    """
+    """Exibe informações gerais do dataset."""
     print("\n" + "=" * 70)
     print("DATASET CARREGADO COM SUCESSO")
     print("=" * 70)
@@ -161,9 +130,7 @@ def print_dataset_information(
 
 
 def print_quality_report(quality: dict) -> None:
-    """
-    Exibe o relatório de qualidade dos dados.
-    """
+    """Exibe o relatório de qualidade dos dados."""
     print("\n" + "=" * 70)
     print("RELATÓRIO DE QUALIDADE DOS DADOS")
     print("=" * 70)
@@ -201,16 +168,18 @@ def print_quality_report(quality: dict) -> None:
     group_summary = quality["resumo_grupos"].copy()
 
     group_summary["primeira_data"] = (
-        group_summary["primeira_data"]
-        .dt.strftime("%d/%m/%Y")
+        group_summary["primeira_data"].dt.strftime("%d/%m/%Y")
     )
 
     group_summary["ultima_data"] = (
-        group_summary["ultima_data"]
-        .dt.strftime("%d/%m/%Y")
+        group_summary["ultima_data"].dt.strftime("%d/%m/%Y")
     )
 
-    print(group_summary.to_string(index=False))
+    print(
+        group_summary.to_string(
+            index=False,
+        )
+    )
 
     print("\nEstabilidade da taxa de cashback:")
 
@@ -244,17 +213,13 @@ def print_quality_report(quality: dict) -> None:
         for warning in quality["avisos"]:
             print(f"  - {warning}")
     else:
-        print(
-            "  Nenhum problema de qualidade encontrado."
-        )
+        print("  Nenhum problema de qualidade encontrado.")
 
 
 def print_business_summary(
     summary: pd.DataFrame,
 ) -> None:
-    """
-    Exibe as métricas consolidadas de cada variante.
-    """
+    """Exibe as métricas consolidadas de cada variante."""
     print("\n" + "=" * 70)
     print("RESULTADOS CONSOLIDADOS POR VARIANTE")
     print("=" * 70)
@@ -272,39 +237,39 @@ def print_business_summary(
 
         print(
             "Compradores:",
-            format_number(row["compradores"]),
+            format_integer_brl(row["compradores"]),
         )
 
         print(
             "Vendas totais:",
-            format_currency(row["vendas_totais"]),
+            format_currency_brl(row["vendas_totais"]),
         )
 
         print(
             "Comissão:",
-            format_currency(row["comissao"]),
+            format_currency_brl(row["comissao"]),
         )
 
         print(
             "Cashback:",
-            format_currency(row["cashback"]),
+            format_currency_brl(row["cashback"]),
         )
 
         print(
             "Receita líquida:",
-            format_currency(
+            format_currency_brl(
                 row["receita_liquida"]
             ),
         )
 
         print(
             "Ticket médio:",
-            format_currency(row["ticket_medio"]),
+            format_currency_brl(row["ticket_medio"]),
         )
 
         print(
             "Receita por comprador:",
-            format_currency(
+            format_currency_brl(
                 row["receita_por_comprador"]
             ),
         )
@@ -316,30 +281,30 @@ def print_business_summary(
 
         print(
             "Média diária de vendas:",
-            format_currency(
+            format_currency_brl(
                 row["media_diaria_vendas"]
             ),
         )
 
         print(
             "Média diária de receita líquida:",
-            format_currency(
+            format_currency_brl(
                 row["media_diaria_receita_liquida"]
             ),
         )
 
         print(
-            f"Taxa de comissão: "
+            "Taxa de comissão: "
             f"{row['taxa_comissao'] * 100:.2f}%"
         )
 
         print(
-            f"Taxa de cashback: "
+            "Taxa de cashback: "
             f"{row['taxa_cashback'] * 100:.2f}%"
         )
 
         print(
-            f"Margem líquida: "
+            "Margem líquida: "
             f"{row['margem_liquida'] * 100:.2f}%"
         )
 
@@ -347,9 +312,7 @@ def print_business_summary(
 def print_statistical_results(
     comparisons: pd.DataFrame,
 ) -> None:
-    """
-    Exibe os resultados das comparações estatísticas.
-    """
+    """Exibe os resultados das comparações estatísticas."""
     print("\n" + "=" * 70)
     print("COMPARAÇÕES ESTATÍSTICAS PAREADAS")
     print("=" * 70)
@@ -360,17 +323,13 @@ def print_statistical_results(
         "receita_liquida": "Receita líquida",
         "ticket_medio": "Ticket médio",
         "margem_liquida": "Margem líquida",
-        "receita_por_comprador": (
-            "Receita por comprador"
-        ),
+        "receita_por_comprador": "Receita por comprador",
     }
 
     for variant, results in comparisons.groupby(
         "grupo_variante"
     ):
-        control = results[
-            "grupo_controle"
-        ].iloc[0]
+        control = results["grupo_controle"].iloc[0]
 
         print(f"\n{variant} versus {control}")
         print("-" * 70)
@@ -399,33 +358,33 @@ def print_statistical_results(
             print(f"  Lift: {lift_text}")
 
             print(
-                f"  Média diária do controle: "
+                "  Média diária do controle: "
                 f"{row['media_diaria_controle']:.2f}"
             )
 
             print(
-                f"  Média diária da variante: "
+                "  Média diária da variante: "
                 f"{row['media_diaria_variante']:.2f}"
             )
 
             print(
-                f"  Diferença média diária: "
+                "  Diferença média diária: "
                 f"{row['diferenca_media_diaria']:.2f}"
             )
 
             print(
-                f"  IC 95% da diferença: "
+                "  IC 95% da diferença: "
                 f"[{row['ic95_inferior']:.2f}, "
                 f"{row['ic95_superior']:.2f}]"
             )
 
             print(
-                f"  Teste t pareado — p-valor: "
+                "  Teste t pareado — p-valor: "
                 f"{row['p_valor_t_pareado']:.6f}"
             )
 
             print(
-                f"  Wilcoxon — p-valor: "
+                "  Wilcoxon — p-valor: "
                 f"{row['p_valor_wilcoxon']:.6f}"
             )
 
@@ -435,9 +394,7 @@ def print_statistical_results(
 
 
 def print_decision(decision: dict) -> None:
-    """
-    Exibe a recomendação final do motor de decisão.
-    """
+    """Exibe a recomendação final do motor de decisão."""
     print("\n" + "=" * 70)
     print("DECISÃO RECOMENDADA")
     print("=" * 70)
@@ -469,7 +426,7 @@ def print_decision(decision: dict) -> None:
     )
 
     print(
-        f"\nJustificativa:\n"
+        "\nJustificativa:\n"
         f"{decision['motivo']}"
     )
 
@@ -480,9 +437,7 @@ def save_outputs(
     decision: dict,
     partner: str,
 ) -> list[Path]:
-    """
-    Salva os resultados consolidados em arquivos CSV.
-    """
+    """Salva os resultados consolidados em arquivos CSV."""
     output_directory = Path("outputs")
 
     output_directory.mkdir(
@@ -545,9 +500,7 @@ def generate_report_files(
     decision: dict,
     partner: str,
 ) -> Path:
-    """
-    Gera os gráficos e o relatório HTML.
-    """
+    """Gera os gráficos e o relatório HTML."""
     partner_slug = create_partner_slug(partner)
 
     report_directory = (
@@ -574,9 +527,7 @@ def generate_report_files(
 
 
 def main() -> None:
-    """
-    Executa todas as etapas da análise.
-    """
+    """Executa todas as etapas da análise."""
     arguments = parse_arguments()
 
     try:
@@ -659,12 +610,12 @@ def main() -> None:
             )
 
         print(
-            f"\nRelatório HTML gerado:\n"
+            "\nRelatório HTML gerado:\n"
             f"  {report_path.resolve()}"
         )
 
         print(
-            f"\nPlanilha consolidada em CSV:\n"
+            "\nPlanilha consolidada em CSV:\n"
             f"  {tracker_path.resolve()}"
         )
 
@@ -680,11 +631,13 @@ def main() -> None:
         print("=" * 70)
 
         print(
-            f"\nTipo do erro: "
+            "\nTipo do erro: "
             f"{type(error).__name__}"
         )
 
-        print(f"Mensagem: {error}")
+        print(
+            f"Mensagem: {error}"
+        )
 
         raise SystemExit(1) from error
 
@@ -694,11 +647,13 @@ def main() -> None:
         print("=" * 70)
 
         print(
-            f"\nTipo do erro: "
+            "\nTipo do erro: "
             f"{type(error).__name__}"
         )
 
-        print(f"Mensagem: {error}")
+        print(
+            f"Mensagem: {error}"
+        )
 
         raise SystemExit(1) from error
 
